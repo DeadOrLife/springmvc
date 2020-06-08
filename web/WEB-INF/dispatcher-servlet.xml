@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <context:component-scan base-package="com.wz.springmvc"></context:component-scan>
+
+    <!--指定视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 视图的路径 -->
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <!-- 视图名称后缀  -->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 使用视图的名字来解析视图 -->
+    <!--通过order 属性来定义视图的优先级 order的值越小优先级越高-->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="100"></property>
+    </bean>
+
+
+    <!--配置国际化资源-->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="i18n"></property>
+    </bean>
+
+    <!--配置直接转发的页面-->
+    <!--这样的可以不经过handler   http://localhost:8080/success 但是需要配置mvc:annotation-driven  -->
+    <mvc:view-controller path="/success" view-name="success"></mvc:view-controller>
+
+    <mvc:annotation-driven/>
+</beans>
